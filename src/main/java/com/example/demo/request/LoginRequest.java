@@ -1,27 +1,22 @@
 package com.example.demo.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotBlank;
+
+@Validated
 public class LoginRequest {
-    @NotBlank
+    @NotBlank(message = "username is amndatory")
     private String userName;
-    @NotBlank
+    @NotBlank(message = "password is mandatory")
     private String password;
 
     public String getUserName() {
         return userName;
     }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -1,9 +1,9 @@
-package com.example.demo;
+package com.example.demo.response;
 
-public class ResponseEntity {
+public class ResponseEntity<T> {
     private int responseCode;
     private String responseMessage;
-    private String response;
+    private T response;
 
     public int getResponseCode() {
         return responseCode;
@@ -21,18 +21,18 @@ public class ResponseEntity {
         this.responseMessage = responseMessage;
     }
 
-    public String getResponse() {
+    public T getResponse() {
         return response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(T response) {
         this.response = response;
     }
 
     public ResponseEntity() {
     }
 
-    public ResponseEntity(int responseCode, String responseMessage, String response) {
+    public ResponseEntity(int responseCode, String responseMessage, T response) {
         this.responseCode = responseCode;
         this.responseMessage = responseMessage;
         this.response = response;

@@ -5,6 +5,7 @@ import com.example.demo.repo.UserRepo;
 import com.example.demo.request.LoginRequest;
 import com.example.demo.request.UserRequest;
 import com.example.demo.service.UserService;
+import com.example.demo.utils.AESOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +16,20 @@ public class UserServiceImpl implements UserService {
     UserRepo userRepo;
 
     @Override
-    public void saveUserDetails(UserRequest userRequest) {
+    public boolean saveUserDetails(UserRequest userRequest) {
         User user = new User(userRequest);
-        userRepo.save(user);
+        user.setPassword(AESOperations.encryptTextUsingAES(userRequest.getPassword()));
+        return (userRepo.save(user) != null);
     }
 
     @Override
     public boolean userLogin(LoginRequest loginRequest) {
-        return userRepo.findByUserNameAndPassword(loginRequest.getUserName(), loginRequest.getPassword()) != null;
+        User user = userRepo.findByUserName(loginRequest.getUserName());
+        if (user != null){
+            return loginRequest.getPassword().equals(AESOperations.decryptCipherToString(user.getPassword()));
+        } else {
+            return false;
+        }
     }
 
 
